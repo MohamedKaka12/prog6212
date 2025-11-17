@@ -1,0 +1,137 @@
+﻿@using PROG6212_POE.Models
+@{
+    ViewData["Title"] = "Academic Manager Dashboard";
+    Layout = "_Layout";
+
+    var claimsForReview = StaticDb.GetClaimsForManagerReview();
+}
+
+<div class="p-8 bg-gray-50 min-h-screen">
+    <div class="flex justify-between items-center mb-10 border-b pb-4">
+        <h1 class="text-4xl font-extrabold text-purple-800">Academic Manager Portal</h1>
+        <div class="text-lg font-semibold text-gray-600">Role: <span class="text-purple-600">Academic Manager</span></div>
+    </div>
+
+    <p class="text-lg mb-8 text-gray-700">Welcome, @User.Identity?.Name! You have oversight of all claims and financial reporting.</p>
+
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="p-4 mb-6 text-sm text-green-700 bg-green-100 rounded-lg border border-green-200" role="alert">
+            @TempData["SuccessMessage"]
+        </div>
+    }
+
+    @if (TempData["ErrorMessage"] != null)
+    {
+        <div class="p-4 mb-6 text-sm text-red-700 bg-red-100 rounded-lg border border-red-200" role="alert">
+            @TempData["ErrorMessage"]
+        </div>
+    }
+
+    <div class="bg-white shadow-xl rounded-xl overflow-hidden">
+        <div class="p-6 bg-purple-50 border-b border-purple-200">
+            <h2 class="text-2xl font-bold text-purple-800">Claims Pending Final Review (@claimsForReview.Count)</h2>
+            <p class="text-sm text-gray-600">These claims have been verified by the Programme Coordinator and require your final approval.</p>
+        </div>
+
+        @if (claimsForReview.Any())
+        {
+            <div class="overflow-x-auto">
+                <table class="min-w-full divide-y divide-gray-200">
+                    <thead class="bg-gray-50">
+                        <tr>
+                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Lecturer</th>
+                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Submitted</th>
+                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Coordinator</th>
+                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Amount</th>
+                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+                            <th scope="col" class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody class="bg-white divide-y divide-gray-200">
+                        @foreach (var claim in claimsForReview)
+                        {
+                            <tr>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">@claim.LecturerUsername</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">@claim.SubmittedDate.ToString("yyyy-MM-dd")</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                    @claim.ReviewerUsername <br /><span class="text-xs text-green-500">Approved: @claim.ReviewedDate?.ToString("yyyy-MM-dd")</span>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm font-semibold text-purple-700">R@claim.TotalAmount.ToString("F2")</td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <span class="px-3 py-1 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-100 text-yellow-800">
+                                        Coordinator Approved
+                                    </span>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium space-x-2">
+
+                                    <form asp-controller="Claims" asp-action="Approve" method="post" class="inline-block" onsubmit="return confirm('Are you sure you want to FINALLY APPROVE this claim? This is the final step.');">
+                                        <input type="hidden" name="claimId" value="@claim.ClaimId" />
+                                        <button type="submit" class="text-green-600 hover:text-green-900 font-semibold transition duration-150">
+                                            Final Approve
+                                        </button>
+                                    </form>
+
+                                    <button onclick="showRejectModal('@claim.ClaimId')" class="text-red-600 hover:text-red-900 font-semibold transition duration-150">
+                                        Reject
+                                    </button>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        }
+        else
+        {
+            <div class="text-center py-10 text-gray-500">
+                <i data-lucide="award" class="mx-auto w-10 h-10 text-purple-400 mb-2"></i>
+                <p>No claims currently pending final review.</p>
+            </div>
+        }
+    </div>
+
+</div>
+
+<div id="rejectModal" class="fixed inset-0 bg-black bg-opacity-50 hidden flex items-center justify-center z-50">
+    <div class="bg-white rounded-lg shadow-xl p-6 w-full max-w-md">
+        <h2 class="text-xl font-bold text-red-600 mb-4 border-b pb-2">Reject Claim Confirmation</h2>
+        <p class="text-gray-700 mb-4">You must provide a reason for the rejection. This reason will be visible to the lecturer.</p>
+
+        <form asp-controller="Claims" asp-action="Reject" method="post" class="mt-4">
+            <input type="hidden" id="rejectClaimId" name="claimId" />
+            <div class="mb-4">
+                <label for="rejectReason" class="block text-sm font-medium text-gray-700">Reason for Rejection</label>
+                <textarea id="rejectReason" name="reason" rows="3" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500" placeholder="Please provide a reason for rejecting this claim..." required></textarea>
+            </div>
+            <div class="flex justify-end space-x-3">
+                <button type="button" onclick="hideRejectModal()" class="px-4 py-2 bg-gray-500 text-white rounded-md hover:bg-gray-600 transition duration-150">
+                    Cancel
+                </button>
+                <button type="submit" class="px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700 transition duration-150">
+                    Reject Claim
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+    function showRejectModal(claimId) {
+        document.getElementById('rejectClaimId').value = claimId;
+        document.getElementById('rejectModal').classList.remove('hidden');
+    }
+
+    function hideRejectModal() {
+        document.getElementById('rejectModal').classList.add('hidden');
+        document.getElementById('rejectReason').value = '';
+    }
+
+    document.getElementById('rejectModal').addEventListener('click', function(e) {
+        if (e.target === this) {
+            hideRejectModal();
+        }
+    });
+
+    lucide.createIcons();
+</script>

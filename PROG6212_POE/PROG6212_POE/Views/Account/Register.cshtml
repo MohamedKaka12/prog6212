@@ -1,0 +1,38 @@
+﻿@model User
+@{
+    ViewData["Title"] = "Register New User";
+    Layout = "_Layout"; 
+}
+
+<h1 class="text-3xl font-bold mb-6 text-indigo-700">User Registration</h1>
+
+<div class="max-w-md mx-auto p-6 bg-white rounded-xl shadow-lg">
+    <form asp-action="Register" method="post">
+        <div class="mb-4">
+            <label asp-for="Username" class="block text-sm font-medium text-gray-700"></label>
+            <input asp-for="Username" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500" />
+            <span asp-validation-for="Username" class="text-sm text-red-600"></span>
+        </div>
+
+        <div class="mb-4">
+            <label asp-for="Password" class="block text-sm font-medium text-gray-700"></label>
+            <input asp-for="Password" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500" />
+            <span asp-validation-for="Password" class="text-sm text-red-600"></span>
+        </div>
+
+        <div class="mb-6">
+            <label asp-for="Role" class="block text-sm font-medium text-gray-700">Select Role</label>
+            <select asp-for="Role" asp-items="Html.GetEnumSelectList<UserRole>()" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"></select>
+            <span asp-validation-for="Role" class="text-sm text-red-600"></span>
+        </div>
+
+        <div class="flex flex-col space-y-3">
+            <button type="submit" class="w-full py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 transition duration-150">
+                Register
+            </button>
+            <a asp-action="Login" class="text-center text-sm font-medium text-indigo-600 hover:text-indigo-500 transition duration-150">Already registered? Log in here.</a>
+        </div>
+
+        <div asp-validation-summary="All" class="mt-4 text-sm text-red-600"></div>
+    </form>
+</div>

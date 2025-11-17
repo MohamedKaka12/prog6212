@@ -1,0 +1,85 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Claims System</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif; 
+            background-color: #F8F8F8; 
+            color: #111827; 
+            min-height: 100vh;
+        }
+
+        .main-content {
+            padding-top: 5rem; 
+            padding-bottom: 2rem;
+            min-height: calc(100vh - 4rem);
+        }
+    </style>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'brand-blue': {
+                            600: '#4F46E5', 
+                            700: '#4338CA',
+                            50: '#EEF2FF', 
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-gray-50 text-gray-900">
+
+    <header class="fixed top-0 left-0 w-full z-10 bg-white shadow-lg border-b-4 border-brand-blue-600">
+        <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 flex justify-between items-center">
+            <a asp-controller="Account" asp-action="Register" class="text-3xl font-bold tracking-tight text-brand-blue-600 hover:text-brand-blue-700 transition duration-150 flex items-center">
+                <i data-lucide="" class="inline-block w-7 h-7 mr-2"></i> PROG6212
+            </a>
+
+            <div class="flex items-center space-x-4">
+                @if (User.Identity.IsAuthenticated)
+                {
+                    <span class="text-sm font-medium text-gray-500 hidden sm:block">
+                        @User.Identity.Name (<span class="text-brand-blue-600 font-semibold">@User.FindFirst(System.Security.Claims.ClaimTypes.Role)?.Value</span>)
+                    </span>
+                    <a asp-controller="Account" asp-action="Logout" class="px-4 py-2 text-sm font-medium rounded-full text-white bg-red-600 hover:bg-red-700 transition duration-150 shadow-md">
+                        <i data-lucide="log-out" class="inline-block w-4 h-4 mr-1"></i> Logout
+                    </a>
+                }
+                else
+                {
+                    <a asp-controller="Account" asp-action="Login" class="px-4 py-2 text-sm font-medium rounded-full text-brand-blue-600 hover:text-brand-blue-700 transition duration-150">
+                        Login
+                    </a>
+                    <a asp-controller="Account" asp-action="Register" class="px-4 py-2 text-sm font-medium rounded-full text-white bg-green-600 hover:bg-green-700 transition duration-150 shadow-md">
+                        Register
+                    </a>
+                }
+            </div>
+        </nav>
+    </header>
+
+    <div class="main-content max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+    <footer class="bg-gray-100 border-t border-gray-200 py-3 text-center text-xs text-gray-500">
+        &copy; PROG6212_POE. ST10281502.
+    </footer>
+
+    <script>
+        lucide.createIcons();
+    </script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

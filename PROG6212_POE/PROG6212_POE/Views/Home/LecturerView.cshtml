@@ -1,0 +1,91 @@
+﻿@using PROG6212_POE.Models
+@{
+    ViewData["Title"] = "Lecturer Dashboard";
+    Layout = "_Layout";
+    
+    var lecturerUsername = User.Identity?.Name ?? "";
+    var userClaims = StaticDb.GetClaimsByLecturer(lecturerUsername);
+}
+
+<div class="p-8 bg-gray-50 min-h-screen">
+    <div class="flex justify-between items-center mb-10 border-b pb-4">
+        <h1 class="text-4xl font-extrabold text-indigo-800">Lecturer Portal</h1>
+        <div class="text-lg font-semibold text-gray-600">Role: <span class="text-indigo-600">Lecturer</span></div>
+    </div>
+
+    <p class="text-lg mb-6 text-gray-700">Welcome, @User.Identity.Name! This is your dashboard for submitting and tracking claims.</p>
+
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="p-4 mb-6 text-sm text-green-700 bg-green-100 rounded-lg border border-green-200" role="alert">
+            @TempData["SuccessMessage"]
+        </div>
+    }
+
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <div class="lg:col-span-2 bg-white p-6 rounded-xl shadow-2xl border-t-4 border-indigo-500">
+            <div class="flex justify-between items-center mb-6">
+                <h2 class="text-2xl font-bold text-indigo-700">Submit New Claim</h2>
+                <a asp-controller="Claims" asp-action="Submit" class="inline-flex items-center justify-center w-full py-3 px-4 border border-transparent rounded-lg shadow-sm text-base font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition duration-150">
+                    <i data-lucide="send" class="w-5 h-5 mr-2"></i> Submit New Claim
+                </a>
+            </div>
+            <p class="mb-4 text-gray-600">Click the button above to submit a new claim with hours worked, hourly rate, and supporting documentation.</p>
+            
+            <div class="grid grid-cols-3 gap-4 mt-6">
+                <div class="bg-blue-50 p-4 rounded-lg text-center">
+                    <div class="text-2xl font-bold text-blue-600">@userClaims.Count</div>
+                    <div class="text-sm text-blue-800">Total Claims</div>
+                </div>
+                <div class="bg-yellow-50 p-4 rounded-lg text-center">
+                    <div class="text-2xl font-bold text-yellow-600">@userClaims.Count(c => c.Status == ClaimStatus.Pending)</div>
+                    <div class="text-sm text-yellow-800">Pending</div>
+                </div>
+                <div class="bg-green-50 p-4 rounded-lg text-center">
+                    <div class="text-2xl font-bold text-green-600">@userClaims.Count(c => c.Status == ClaimStatus.ApprovedByManager)</div>
+                    <div class="text-sm text-green-800">Approved</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="bg-white p-6 rounded-xl shadow-2xl border-t-4 border-green-500">
+            <div class="flex justify-between items-center mb-4">
+                <h2 class="text-2xl font-bold text-green-700">My Claim Status</h2>
+                <a asp-controller="Claims" asp-action="MyClaims" class="text-sm text-green-600 hover:text-green-500">View All</a>
+            </div>
+            
+            @if (userClaims.Any())
+            {
+                <div class="space-y-4">
+                    @foreach (var claim in userClaims.Take(3))
+                    {
+                        <div class="p-3 rounded-md shadow @(claim.Status == ClaimStatus.Pending ? "bg-yellow-100 border-l-4 border-yellow-500" : 
+                                                          claim.Status == ClaimStatus.ApprovedByManager ? "bg-green-100 border-l-4 border-green-500" : 
+                                                          "bg-red-100 border-l-4 border-red-500")">
+                            <p class="font-bold">Claim ID: #@claim.ClaimId.Substring(0, 8)</p>
+                            <p class="text-sm">Status: <span class="font-bold @(claim.Status == ClaimStatus.Pending ? "text-yellow-600" : 
+                                                                           claim.Status == ClaimStatus.ApprovedByManager ? "text-green-600" : 
+                                                                           "text-red-600")">@claim.Status</span></p>
+                            <p class="text-xs text-gray-600">Amount: R@claim.TotalAmount.ToString("F2")</p>
+                            <p class="text-xs text-gray-600">Submitted: @claim.SubmittedDate.ToString("yyyy-MM-dd")</p>
+                            @if (!string.IsNullOrEmpty(claim.RejectionReason))
+                            {
+                                <p class="text-xs text-red-600 mt-1">Reason: @claim.RejectionReason</p>
+                            }
+                        </div>
+                    }
+                </div>
+            }
+            else
+            {
+                <div class="text-center py-8 text-gray-500">
+                    <svg class="mx-auto h-12 w-12 text-gray-400 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                    </svg>
+                    <p class="text-lg font-medium">No claims submitted yet</p>
+                    <p class="text-sm">Click "Submit New Claim" to get started</p>
+                </div>
+            }
+        </div>
+    </div>
+</div>
