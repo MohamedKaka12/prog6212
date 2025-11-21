@@ -20,8 +20,11 @@ Navigation: A consistent top-navigation bar with a glass-morphism effect ensures
 ## Key Features (Part 3 Updates)
 ### 1. HR Administration (New Role)
 A new main role (HR) has been introduced to centralise control:
+  
   User Management: HR creates and manages all user accounts (Lecturers, Coordinators, Managers). Public registration is restricted.
+  
   Rate Management: HR sets the agreed Hourly Rate for each lecturer, preventing manual entry errors during claim submission.
+  
   Reporting: A dedicated reporting view allows HR to generate claim invoices.
 
 ### 2. Streamlined Claim Submission
