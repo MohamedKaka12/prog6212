@@ -52,18 +52,14 @@ Claims Table: Store all claim details
 Documents Table: This will link supporting files to their respective claims
 
 ## Assumptions:
-All users wiill have access to a device with a web browser.
+All users have access to a web browser.
 
-All uploaded documents will be common and in viewable formats.
+The HR administrator is responsible for the initial onboarding of staff.
 
-User base will consist of three defined roles (Lecturer, Programme Coordinator, Academic Manager).
+Users are familiar with standard file upload procedures.
 
 ## Constraints:
-This is a prototype and does not have a fully functional back-end.
-
 The system must adhere to the technological constraint of having to be developed by a MVC Framework.
-
-The submission must be version-controlled on Github with at least five documented commits.
 
 # UML Class Diagram (Visual Paradigm, 2019)
 
