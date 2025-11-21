@@ -29,14 +29,20 @@ A new main role (HR) has been introduced to centralise control:
 
 ### 2. Streamlined Claim Submission
 The Lecturer's claim process has been automated and secured:
+  
   Auto-Calculation: The Hourly Rate is automatically pulled from the HR record.
+  
   Validation: Strict server-side validation ensures:
+    
     Claims cannot exceed 180 hours per month.
+    
     Supporting documents must be valid file types (PDF, DOCX, XLSX) and under 5MB.
 
 ### 3. Approval Workflow
 Programme Coordinator: Reviews claims first.
+
 Academic Manager: Provides final approval.
+
 Status Tracking: Lecturers can track the exact status of their claim and view rejection reasons if applicable.
 
 ## Database Structure (not used in Part 2)
