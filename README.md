@@ -75,37 +75,47 @@ The system must adhere to the technological constraint of having to be developed
 ### Due to the low mark that I have gotten in Part 1, I have decided to change the way everything is because I think I got the entire concept wrong at first. Part 2 mockups to follow:
 ## Login Screen
 
-This is the first screen the user will see, if not registered, they must register.
+The entry point for all users, featuring a secure, minimalist card layout.
 
-<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/4e228934-a886-4c63-be51-98f0cbb8a5ee" />
+<img width="1918" height="970" alt="image" src="https://github.com/user-attachments/assets/eeb093d4-9f28-424a-9e71-c765288301aa" />
 
-If the user is registered, they must just login.
+## HR Dashboard
 
-<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/a3ac731c-e19d-4482-be7e-15a336685e20" />
+HR can view system stats, manage user accounts and generate reports.
+
+<img width="1918" height="968" alt="image" src="https://github.com/user-attachments/assets/2deb148d-07e6-43a3-b878-3879038efcaf" />
+
+## HR User Management
+
+<img width="1918" height="968" alt="image" src="https://github.com/user-attachments/assets/5f9d3a44-a097-4c83-95ab-3a6281bfc7d8" />
+
+## HR Reports
+
+<img width="1918" height="968" alt="image" src="https://github.com/user-attachments/assets/53c6687b-02f8-419b-9e15-df048c2a3e02" />
 
 ## Lecturer's Dashboard
 
-This is the lecturers dashboard where you can basically see everything like how many claims are pending, approved or rejected with a list of all your claims and its status on the right. And a button to take you to the form.
+Lecturers can view their claim history with clear status indicators.
 
-<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/dc099fe8-9445-41ac-9877-3e528e5f7087" />
+<img width="1918" height="968" alt="image" src="https://github.com/user-attachments/assets/9df923b8-8370-4dd9-8094-311251b9ebea" />
 
 ## Submit New Claim
 
-This is the form that you will fill out to submit a claim with a section to upload any supporting documents.
+The claim submission form where rate is pre-filled and totals are auto-calculated.
 
-<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/c37b32e1-752b-40c7-82c4-98ca73a6bd8e" />
+<img width="1232" height="970" alt="image" src="https://github.com/user-attachments/assets/c6b51d8a-57a4-4279-934b-9efb09be9007" />
 
 ## Programme Coordinator Dashboard
 
-This is for the Programme Coordinator. There is a list of claims waiting for the approval. (Just need to fix the amount display)
+There is a list of claims waiting for the approval.
 
-<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/066b33c1-546a-420f-8d87-d32ff802c19d" />
+<img width="1918" height="811" alt="image" src="https://github.com/user-attachments/assets/b3ddb7b2-7c12-44dd-8d0f-fb06144edb97" />
 
 ## Academic Manager Dashboard
 
-This is for the Academic Manager. There is a list of approved claims from the Programme Coordinator that i waiting for a final approval.
+There is a list of approved claims from the Programme Coordinator that are waiting for the final approval.
 
-<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/2b92ac34-f3f6-4e05-9e12-e094e7c65e5c" />
+<img width="1918" height="867" alt="image" src="https://github.com/user-attachments/assets/907a9fc3-d6a8-4eb3-9617-196d370c0cda" />
 
 # Reference List
 
