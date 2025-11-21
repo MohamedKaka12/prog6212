@@ -1,11 +1,21 @@
 # Documentation (Laoyan, 2025)
 
 ## Design Choices and GUI layout
-My design is based on the principle of minimalism, simplicity and user-centricity. This allows a comfortable, easy and efficient user experience.
-I have decided to go with a professional and calming combination of colours like deep blues and white. And I will be using a clean sans-serif font like Arial or Helvetica to make sure that users can read properly.
-I will use a top navigation bar that will provide access to all the systems features. This will give a consistent look and feel across all user views.
-The system will provide a easy to use dashboard so that lecturers can easily submit new claims and track the status of existing ones.
-There will be a dedicated view that will allow the Programme Coordinator and Academic Manager to review and approve or reject claims.
+For Part 3, the design changed towards a "Corporate Minimalist" aesthetic to enhance professional usability and reduce visual clutter.
+
+Color Palette: A strict Monochrome theme (Black, Grey, Off-White) allows content to take center stage.
+
+Functional Color: Vibrant colors are reserved only for status indicators to provide immediate visual feedback:
+
+🟢 Green: Approved / Success
+
+🟡 Amber/Yellow: Pending / Warning
+
+🔴 Red: Rejected / Error
+
+Typography: The Inter font family is used for a clean, modern, and highly readable interface suitable for financial data.
+
+Navigation: A consistent top-navigation bar with a glass-morphism effect ensures easy access to role-specific dashboards.
 
 ## Database Structure (not used in Part 2)
 The database will be designed to support the systems main features. It will have three tables:
